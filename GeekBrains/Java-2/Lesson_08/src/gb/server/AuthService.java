@@ -1,0 +1,130 @@
+package gb.server;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class AuthService {
+
+    private static Connection connection;
+    private static Statement stmt;
+
+    public static void connect() throws SQLException {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:userTestDB.db");
+            stmt = connection.createStatement();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addUser(String login, String pass, String nick) {
+        String sql = String.format("INSERT INTO userTable (login, password, nickname) " +
+                "VALUES ('%s', '%s', '%s')", login, pass.hashCode(), nick);
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static String getNickByLoginAndPass(String login, String pass) {
+
+        String sql = String.format("select nickname, password FROM userTable where" +
+                " login = '%s'", login);
+        try {
+            int myHash = pass.hashCode();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+               String nick = rs.getString(1);
+               int dbHash = rs.getInt(2);
+               if(myHash == dbHash) {
+                   return nick;
+               }
+                // / return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static void disconnect() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addBlackListSQL (String blocker, String blocking) {
+        String sql = String.format("INSERT INTO blacklist (Blocker, Blocking) " +
+                "VALUES ('%s', '%s')", blocker, blocking);
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeBlackListSQL (String blocker, String blocking) {
+        String sql = String.format("DELETE FROM blacklist WHERE Blocker = '%s' AND Blocking = '%s'", blocker, blocking);
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                stmt.execute(sql);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<String> blackListFromSQL (String blocker) {
+        List<String> blackList = new ArrayList<>();
+        String sql = String.format("SELECT Blocking FROM blacklist where" +
+                " Blocker = '%s'", blocker);
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                blackList.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return blackList;
+    }
+
+    public static boolean validLoginNick (String loginOrNick, String name) {
+        if (name.length() > 0) {
+            String sql = String.format("SELECT %s FROM userTable where %s = '%s'", loginOrNick, loginOrNick, name);
+            ResultSet rs = null;
+            try {
+                rs = stmt.executeQuery(sql);
+                return !rs.next();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
+    public static boolean passwordVerification(String password) {
+        Pattern p = Pattern.compile("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])+.{8,}");
+        Matcher m = p.matcher(password);
+        if (m.matches()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}

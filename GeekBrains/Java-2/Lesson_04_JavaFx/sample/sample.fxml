@@ -1,0 +1,21 @@
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import java.net.URL?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<VBox alignment="center" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="sample.Controller" >
+    <stylesheets><URL value="@/css/Styles.css"/> </stylesheets>
+    <HBox VBox.vgrow="ALWAYS">
+
+        <TextArea fx:id="textArea" editable="false" HBox.hgrow="ALWAYS" minWidth="250" wrapText="true"/>
+        <TextArea fx:id="textAreaNames" editable="false"  text="В чате никого нет" minWidth="170" maxWidth="170"/>
+    </HBox>
+
+    <HBox>
+        <TextField fx:id="textField" onAction="#sendMsg" promptText="Введите имя..." HBox.hgrow="ALWAYS" />
+        <Button fx:id="btn1" onAction="#sendMsg" text="Отправить" disable="true" minWidth="85" maxWidth="85"/>
+        <Button fx:id="btnEnt" onAction="#entExit" text="Войти" minWidth="85" maxWidth="85" />
+    </HBox>
+</VBox>

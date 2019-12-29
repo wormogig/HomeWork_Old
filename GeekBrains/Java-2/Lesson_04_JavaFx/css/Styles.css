@@ -1,0 +1,53 @@
+
+#btn1 {
+    -fx-font: 14px "serif";
+    -fx-padding: 2;
+    -fx-text-fill: green;
+}
+
+#btn1:hover {
+    -fx-font: 14px "serif";
+    -fx-padding: 2;
+    -fx-background-color: #7FFFD4;
+    -fx-text-fill: green;
+}
+
+#btnEnt {
+    -fx-font: 14px "serif";
+    -fx-padding: 2;
+    -fx-text-fill: green;
+}
+
+#btnEnt:hover {
+    -fx-font: 14px "serif";
+    -fx-padding: 2;
+    -fx-background-color: #7FFFD4;
+    -fx-text-fill: green;
+}
+
+
+#textArea .content {
+    -fx-background-color: #F0FFF0;
+    -fx-border-color: green;
+    -fx-border-radius: 3px;
+    -fx-border-width: 3px;
+}
+
+#textArea {
+    -fx-font: 14px "serif";
+    -fx-text-fill: green;
+
+
+}
+
+#textAreaNames .content {
+    -fx-border-color: green;
+    -fx-border-radius: 3px;
+    -fx-border-width: 3px;
+    -fx-background-color: #F0FFF0;
+}
+
+#textAreaNames {
+    -fx-font: 16px "serif";
+    -fx-text-fill: green;
+}

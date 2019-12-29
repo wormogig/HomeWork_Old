@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="label">Погода</string>
+    <string name="label_settings">Параметры</string>
+
+    <string name="choose_location">Ваш город:</string>
+    <string name="add_settings">Дополнительно:</string>
+
+    <string name="location">Расположение</string>
+    <string name="temperature">Температура:</string>
+    <string name="wind_velocity">Скорость ветра:</string>
+    <string name="humidity">Влажность:</string>
+    <string name="pressure">Давление:</string>
+
+
+    <string name="temp_temperature"> -5</string>
+    <string name="temp_windvelocity"> 1 м/с</string>
+    <string name="temp_humidity"> 81%</string>
+    <string name="temp_pressure"> 748 мм.рт.ст.</string>
+
+
+    <string name="next">Продолжить</string>
+
+
+    <string name="app_name">Weather</string>
+    <string name="geo">Ваше расположение:</string>
+    <string name="weatherNow">Погода сейчас</string>
+
+    <string name="title_activity_main">main</string>
+
+
+    <string-array name="cities">
+        <item>Москва</item>
+    </string-array>
+
+    <string name="menu_description_aw">Погода загружается с AccuaWeather</string>
+    <string name="menu_description_gm">Погода загружается с GisMeteo</string>
+
+    <string name="nav_menu_main">Главное</string>
+    <string name="nav_menu_settings">Настройки</string>
+    <string name="nav_menu_about_the_developer">О разработчике</string>
+    <string name="nav_menu_feedback">Обратная связь</string>
+
+
+</resources>

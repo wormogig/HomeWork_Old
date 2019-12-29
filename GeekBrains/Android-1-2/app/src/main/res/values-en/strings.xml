@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="label">Weather</string>
+    <string name="label_settings">Setting</string>
+
+    <string name="choose_location">You city:</string>
+    <string name="add_settings">Additionally:</string>
+
+    <string name="location">Location</string>
+    <string name="temperature">Temperature:</string>
+    <string name="wind_velocity">Wind velocity:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="pressure">Pressure:</string>
+
+
+    <string name="temp_temperature"> -5</string>
+    <string name="temp_windvelocity"> 1 м/с</string>
+    <string name="temp_humidity"> 81%</string>
+    <string name="temp_pressure"> 748 mmHg</string>
+
+
+    <string name="next">Continue</string>
+
+
+    <string name="app_name">Weather</string>
+    <string name="geo">You location:</string>
+    <string name="weatherNow">Weather now</string>
+
+    <string name="title_activity_main">main</string>
+
+
+    <string-array name="cities">
+        <item>Moscow</item>
+    </string-array>
+
+
+</resources>
