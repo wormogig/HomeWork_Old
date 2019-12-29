@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Page for login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <style type="text/css">
+        .myform {
+            width: 100%; 
+            max-width: 320px;
+            padding-top: 5%;
+        }
+    </style>
+</head>
+
+<body class="text-center bg-light">
+    <div class="container myform">
+        <h2 style="text-align: left">Please sign in</h2>
+        <form  action="#" th:action="@{/loginAction}"  method="post">
+            <div class="field">
+                <label for="uUsername" class="sr-only">Username:</label>
+                <input type="text" id="uUsername" name="username" placeholder="Login" class="form-control" />
+            </div>
+            <div class="field">
+                <label for="uPass" class="sr-only">Password:</label>
+                <input type="text" id="uPass" name="password" placeholder="Password" class="form-control" />
+            </div>
+            <div class="submit" style="padding-top: 10px">
+                <input type="submit" class="btn btn-lg btn-primary btn-block active" value="Sign in" />
+            </div>
+        </form>
+        <div>
+            <a href="/login/google">Войти через Google</a>
+        </div>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Add User</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</head>
+<body style="background-color:#eeeeee">
+
+<!-- Верхнее меню -->
+<header>
+    <nav class="container-fluid bg-dark text-light">
+        <div class="row">
+            <div class="col-2">
+                <h2>Spring CRUD</h2>
+            </div>
+            <div class="col-9">
+
+            </div>
+            <div class="col-1 navbar-toggler">
+                <button onclick="logout()" type="button" class="btn btn-block text-light">Log out</button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Боковое меню -->
+        <nav class="col-2 sidebar bg-light" style="height: 94vh; padding: 0px; padding-top: 10px">
+            <ul class="nav nav-pills flex-column" >
+                <li class="nav-item"   >
+                    <a href="/admin/list" class="nav-link active" style="border-radius:0rem">Admin</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/list" class="nav-link" style="border-radius:0rem">User</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Основная часть -->
+        <div class="col-10 " style="padding:30px; padding-top: 10px">
+            <h1>Admin panel</h1>
+            <!-- Навигация админа -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#list_users">User table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#add">Add user</a>
+                </li>
+            </ul>
+
+            <!-- Содержание вкладок -->
+            <div class="tab-content">
+                <div id="list_users" class="container-fluid tab-pane active bg-white" style="padding:0px">
+                    <!-- Таблица -->
+                    <div class="row" style="padding:10px; padding-left: 30px; background-color:#eeeeee">
+                        <h3>All users </h3>
+                    </div>
+                    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Login</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <th scope="row" th:text="${user.id}"></td>
+                            <td th:text="${user.login}"></td>
+                            <td th:text="${user.password}"></td>
+                            <td th:text="${user.role}"></td>
+                            <td th:text="${user.age}"></td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#edit-modal" onclick="openModal()"
+                                        th:data-user-id="${user.id}"
+                                        th:data-user-login="${user.login}"
+                                        th:data-user-password="${user.password}"
+                                        th:data-user-role="${user.role}"
+                                        th:data-user-age="${user.age}">
+                                    Edit
+                                </button>
+                            </td>
+                            <td>
+                                <form th:action="@{/admin/delete/{id}(id=${user.id})}" method="post">
+                                    <input class="btn btn-block btn-primary" type="submit" value="Delete"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div id="add" class="container-fluid tab-pane fade bg-white">
+                    <div class="row" style="padding:10px; padding-left: 30px; background-color:#eeeeee">
+                        <h3>Add new user</h3>
+                    </div>
+                    <!-- Добавление пользователя -->
+
+                    <div class="row text-center">
+                            <div class="col-4">
+                        
+                            </div>
+                            <form action="/admin/add" method="post" class="col-4" style="padding: 10px">
+                                <div class="form-group">
+                                    <label for="uLogin" class="col-form-label">Login:</label>
+                                    <input type="text" class="form-control" placeholder="Login" id="uLogin" name="login">
+                                </div>
+                                <div class="form-group">
+                                    <label for="uPassword" class="col-form-label">Password:</label>
+                                    <input type="text" class="form-control" placeholder="Password" id="uPassword" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="uRole" class="col-form-label">Role:</label>
+                                    <br>
+                                    <input type="radio" value="ROLE_ADMIN" name="role" id="uRole"> Admin
+                                    <br>    
+                                    <input type="radio" value="ROLE_USER" name="role" id="uRole"> User
+                                </div>
+                                <div class="form-group">
+                                    <label for="uAge" class="col-form-label">Age:</label>
+                                    <input type="number" class="form-control" id="uAge" name="age">
+                                </div>
+                                <div class="submit">
+                                    <input class="btn btn-success" type="submit" value="Add User"/>
+                                </div>
+                            </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="row">
+                    <div class="col-2">
+
+                    </div>
+                    <form th:action="@{/admin/edit}" method="POST" class="col-8">
+                        <div class="form-group">
+                            <label for="modalId" class="col-form-label">Id: </label>
+                            <input type="text" class="form-control" id="modalId" name="id" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalLogin" class="col-form-label">Login:</label>
+                            <input type="text" class="form-control" id="modalLogin" name="login">
+                        </div>
+                        <div class="form-group">
+                            <label for="modalPassword" class="col-form-label">Password:</label>
+                            <input type="text" class="form-control" id="modalPassword" name="password">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Role:</label>
+                            <p><input type="radio" value="ROLE_ADMIN" name="role" id="modalRoleAdmin"> Admin</p>
+                            <p><input type="radio" value="ROLE_USER" name="role" id="modalRoleUser"> User</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalAge" class="col-form-label">Age:</label>
+                            <input type="number" class="form-control" id="modalAge" name="age">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="sendEditUser()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#edit-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        $('#modalId').val(button.data('user-id'));
+        $('#modalLogin').val(button.data('user-login'));
+        $('#modalPassword').val(button.data('user-password'));
+        if (button.data('user-role') == 'ROLE_ADMIN') {
+            $('#modalRoleAdmin').prop("checked", true);
+        } else {
+            $('#modalRoleUser').prop("checked", true);
+        }
+        $('#modalAge').val(button.data('user-age'));
+    });
+
+    function sendEditUser() {
+        $.ajax({
+            type: 'POST',
+            url: '/admin/edit',
+            async: false,
+            data: {
+                id: $('#modalId').val(),
+                login: $('#modalLogin').val(),
+                password: $('#modalPassword').val(),
+                role: $("input[name=role]:checked").val(),
+                age: $('#modalAge').val()
+            }
+        });
+        $('#edit-modal.close').click();
+        location.reload();
+    }
+
+    function logout() {
+        $.ajax({
+            type: 'POST',
+            url: '/logout',
+            async: false,
+        });
+        location.reload();
+    }
+
+</script>
+
+
+
+</body>
+</html>
